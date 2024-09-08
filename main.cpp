@@ -4,6 +4,7 @@
 #include <conio.h>
 #include <string>
 #include <limits>
+#include <cctype>
 
 
 #define GREEN "\033[32m"
@@ -147,29 +148,79 @@ void diabetes::getvalue()
 
 void diabetes::GetSymptoms()
 {
-
-Urination();
-Thirsty();
-Hunger();
-WeightLose();
-BlurryVision();
-SlowHealing();
-
+    Urination();
+    Thirsty();
+    Hunger();
+    BlurryVision();
+    SlowHealing();
+    Numbness();
+    Pain();
 }
 
 
 void diabetes::GetMedicalResults1()
 {
-
-
-
-
-
- 
+    A1C();
+    OGTT();
+    FPG();
+    Insulin();
+    CPeptides();
+    AutoAntibodies();
     GetSymptoms();
 }
 
-// void diabetes::CheckType()
+int diabetes::AnalyseSymptoms(int n) {
+    int count = 0;
+    string result;
+
+    switch (n) {
+        case 1:
+            // Medical test results analysis
+            for (int i = 0; i < 3; i++) {  // A1C, OGTT, FPG results
+                if (s[i] == 'D') {
+                    result = "Diabetic";
+                    break;
+                } else if (s[i] == 'P') {
+                    result = "Prediabetic";
+                }
+            }
+            if (result.empty()) result = "Normal";
+            break;
+
+        case 2:
+            // Symptom analysis
+            for (int i = 6; i < 13; i++) {  // Symptom flags (Y/N for symptoms)
+                if (s[i] == 'Y') {
+                    count++;
+                }
+            }
+            if (count > 3) {
+                result = "Diabetic";
+            } else if (count > 0) {
+                result = "Prediabetic";
+            } else {
+                result = "Normal";
+            }
+            break;
+
+        default:
+            result = "Invalid input.";
+            break;
+    }
+
+    // If diabetic, determine Type 1 or 2
+    if (result == "Diabetic") {
+        if (s[3] == '1' && s[4] == '1' && s[5] == '1') {
+            cout << "Type 1 Diabetes" << endl;
+        } else {
+            cout << "Type 2 Diabetes" << endl;
+        }
+    } else {
+        cout << result << endl;
+    }
+
+    return 0;
+}
 
 
 void diabetes::A1C()
@@ -182,7 +233,7 @@ void diabetes::A1C()
         s[0] = 'N';
     }
 
-    else if (5.7 < x < 6.4)
+    else if (5.7 < x && x < 6.4)
     {
         s[0] = 'P';
     }
@@ -190,7 +241,6 @@ void diabetes::A1C()
     else
     {
         s[0] = 'D';
-        A1C();
     }
 }
 
@@ -206,7 +256,7 @@ void diabetes::OGTT()
         s[1] = 'N';
     }
 
-    else if (140 < x < 199)
+    else if (140 < x && x < 199)
     {
         s[1] = 'P';
     }
@@ -214,7 +264,6 @@ void diabetes::OGTT()
     else
     {
         s[1] = 'D';
-        OGTT();
     }
 }
 
@@ -229,7 +278,7 @@ void diabetes::FPG()
         s[2] = 'N';
     }
 
-    else if (100 < x < 125)
+    else if (100 < x && x < 125)
     {
         s[2] = 'P';
     }
@@ -237,7 +286,6 @@ void diabetes::FPG()
     else
     {
         s[2] = 'D';
-        FPG();
     }
 }
 
@@ -252,16 +300,11 @@ void diabetes::Insulin()
         s[3] = '1';
     }
 
-    else if (5< x < 15)
+    else if (5< x && x < 15)
     {
         s[3] = '2';
     }
 
-    else
-    {
-        cout<<"Wrong Input"<<endl;
-        Insulin();
-    }
 }
 
 void diabetes::CPeptides()
@@ -278,12 +321,6 @@ void diabetes::CPeptides()
     else if ( x>=0.2)
     {
         s[4] = '2';
-    }
-
-    else
-    {
-        cout<<"Wrong Input"<<endl;
-        CPeptides();
     }
 }
 
@@ -307,8 +344,9 @@ void diabetes::AutoAntibodies()
     else
     {
         cout<<"Wrong Input"<<endl;
+        AutoAntibodies();
     }   
-    AutoAntibodies();
+    
 }
 
 void diabetes::Urination()
@@ -330,7 +368,6 @@ void diabetes::Urination()
     else
         {cout << "Wrong Input"<< endl;
         clear();
-        
         Urination();}
 }
 
@@ -351,8 +388,8 @@ void diabetes::Thirsty()
     }
 
     else
-        cout << "Wrong Input";
-        Thirsty();
+       { cout << "Wrong Input";
+        Thirsty();}
 }
 
 void diabetes::Hunger()
@@ -372,8 +409,8 @@ void diabetes::Hunger()
     }
 
     else
-        cout << "Wrong Input"<<endl;
-        Hunger();
+       { cout << "Wrong Input"<<endl;
+        Hunger();}
 }
 
 void diabetes::WeightLose()
@@ -393,8 +430,8 @@ void diabetes::WeightLose()
     }
 
     else
-        cout << "Wrong Input";
-        WeightLose();
+       { cout << "Wrong Input";
+        WeightLose();}
 }
 
 void diabetes::BlurryVision()
@@ -414,8 +451,8 @@ void diabetes::BlurryVision()
     }
 
     else
-        cout << "Wrong Input";
-        BlurryVision();
+       { cout << "Wrong Input";
+        BlurryVision();}
 }
 
 void diabetes::SlowHealing()
@@ -435,8 +472,8 @@ void diabetes::SlowHealing()
     }
 
     else
-        cout << "Wrong Input";
-        SlowHealing();
+      {  cout << "Wrong Input";
+        SlowHealing();}
 }
 
 void diabetes::Numbness()
@@ -456,8 +493,8 @@ void diabetes::Numbness()
     }
 
     else
-        cout << "Wrong Input";
-        Numbness();
+      {  cout << "Wrong Input";
+        Numbness();}
 
 }
 
@@ -478,14 +515,17 @@ void diabetes::Pain()
     }
 
     else
-        cout << "Wrong Input";
-        Pain();
+       { cout << "Wrong Input";
+        Pain();}
 
 }
 
 int main()
 {
     char y;
+    int n;
+    //n = 1: Focuses on analyzing medical test results (A1C, OGTT, FPG, etc.) to determine diabetes type or prediabetes.
+    //n = 2: Focuses on analyzing symptoms like thirst, urination, blurry vision, etc., to identify potential diabetes.
     
     diabetes dts;
     dts.welcome_screen();
@@ -496,12 +536,18 @@ int main()
     y=toupper(y);
 
     if (y=='Y')
-    {dts.GetMedicalResults1();}
+    {dts.GetMedicalResults1();
+    n=1;}
 
     else if (y=='N')
-    {dts.GetSymptoms();}
+    {dts.GetSymptoms();
+    n=2;}
 
-    else {cout<<"Wrong Input"<<endl;}
+    else 
+    {cout<<"Wrong Input"<<endl;}
+
+    dts.AnalyseSymptoms(n);
+
 
     return 0;
 }
