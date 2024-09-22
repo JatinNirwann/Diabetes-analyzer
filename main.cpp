@@ -85,6 +85,8 @@ void diabetes::welcome_screen()
     clear();
 }
 
+
+
 void diabetes::getvalue()
 {
     int consoleWidth = 120;
@@ -502,6 +504,8 @@ int main()
     {dts.GetSymptoms();}
 
     else {cout<<"Wrong Input"<<endl;}
+
+    dts.AnalyseSymptoms();
 
     return 0;
 }
