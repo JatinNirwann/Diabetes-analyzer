@@ -550,8 +550,5 @@ int main()
 
     dts.AnalyseSymptoms(n);
 
-
-    dts.AnalyseSymptoms();
-
     return 0;
 }
